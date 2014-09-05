@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath:project.properties"/>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${dbcp.driverClassName}"/>
+        <property name="url" value="${dbcp.url}"/>
+        <property name="username" value="${dbcp.username}"/>
+        <property name="password" value="${dbcp.password}"/>
+
+        <!-- 设定最大连接数  -->
+        <property name="maxActive" value="${dbcp.maxActive}"/>
+        <!-- 设定最大空闲时间（毫秒） -->
+        <property name="maxIdle" value="${dbcp.maxIdle}"/>
+        <!-- 设定最大等待时间（毫秒） -->
+        <property name="maxWait" value="${dbcp.maxWait}"/>
+        <!-- 超时自动收回 -->
+        <property name="removeAbandoned" value="${dbcp.removeAbandoned}"/>
+        <!--
+                 超时时间(以秒数为单位)设置超时时间有一个要注意的地方，
+                 超时时间=现在的时间-程序中创建Connection的时间，如果
+                 maxActive比较大，比如超过100，那么removeAbandonedTimeout
+                 可以设置长一点比如180， 也就是三分钟无响应的连接进行回收，
+                 当然应用的不同设置长度也不同。
+         -->
+        <property name="removeAbandonedTimeout" value="${dbcp.removeAbandonedTimeout}"/>
+        <!-- 在自动回收超时连接的时候打印连接的超时错误 -->
+        <property name="logAbandoned" value="${dbcp.logAbandoned}"/>
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="typeAliasesPackage" value="me.risky.talk.comment.domain" />
+    </bean>
+
+    <!-- myBatis映射文件配置扫描器 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="me.risky.talk.comment.persistence" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+    </bean>
+</beans>
