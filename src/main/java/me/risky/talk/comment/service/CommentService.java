@@ -30,7 +30,7 @@ public class CommentService {
         TCommentExample example = new TCommentExample();
         TCommentExample.Criteria c = example.createCriteria();
         c.andTypeEqualTo(type);
-        c.andKeyEqualTo(key);
+        c.andUrlKeyEqualTo(key);
         List<TComment> list =  tCommentMapper.selectByExample(example);
         return list;
     }
