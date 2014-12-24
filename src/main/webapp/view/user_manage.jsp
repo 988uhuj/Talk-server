@@ -34,15 +34,15 @@
         <!--/.nav-collapse -->
     </div>
 </nav>
-<div class="container" id="content" style="margin-top: 30px; height:100%" >
+<div class="container" id="content" style="margin-top: 30px; height:100%">
 
     <!--标签页定义-->
-    <ul class="nav nav-tabs" role="tablist" id="nav-tab">
+    <ul class="nav nav-tabs" role="tablist" id="nav-tab" style="margin-bottom: 10px">
         <li class="active" role="presentation">
             <a id="user-list-tab-li" href="#user-list-tab-pane">用户列表</a>
         </li>
 
-        <li class="" role="presentation">
+        <li class="hide" role="presentation">
             <a id="user-new-tab-li" href="#user-new-tab-pane">
                 <button class="close closeTheTab" type="button">×</button>
                 新建用户</a>
@@ -54,28 +54,19 @@
         <div class="tab-pane active" id="user-list-tab-pane">
 
             <!-- 主显示区域开始 -->
-            <div class="navbar">
-                <div class="navbar-inner">
-                    <form id="form-user-query" class="navbar-form pull-left">
-                        <input name="account" type="text" class="" placeholder="账号">
+            <nav class="navbar navbar-default" role="navigation">
+                <form class="navbar-form navbar-left navbar-default" id="form-user-query" role="search">
+                    <div class="form-group">
+                        <input name="account" type="text" class="form-control" placeholder="账号">
                         <input value="user/query/by/map" type="hidden" name="action"/>
-
-                        <select class="span2" name="roleId">
-                            <option value="">所有角色</option>
-                            <c:forEach var="role" items="${roles}">
-                                <option value="${role.id}">${role.name}</option>
-                            </c:forEach>
-                        </select>
-
-                        <button type="button" class="btn" onclick="queryUserList(1, 20)"><i class="icon-search"></i> 查询
-                        </button>
-                        <button type="button" class="btn btn-primary" onclick="openNewTab()"><i class="icon-plus"></i>
-                            新建
-                        </button>
-                    </form>
-                </div>
-            </div>
+                        <button type="button" class="btn btn-default" onclick="queryUserList(1, 20)"> 查询</button>
+                        <button type="button" class="btn btn-primary" onclick="openNewTab()"> 新建</button>
+                    </div>
+                </form>
+            </nav>
             <div class="control-group">
+                <h1>22</h1>
+
                 <div class="controls">
                     <table id="user-table" class="table table-bordered table-striped table-hover"></table>
                 </div>
@@ -88,59 +79,46 @@
         <!-- 新建用户标签页 -->
         <div class="tab-pane" id="user-new-tab-pane">
             <form class="form-horizontal" id="userNewForm">
-                <div class="control-group">
+                <div class="form-group">
                     <!-- Text input-->
-                    <label class="control-label">
+                    <label class="col-sm-1 control-label">
                         账号
                     </label>
 
-                    <div class="controls">
-                        <input class="input-xlarge" name="account" id="userId" value="" type="text" placeholder="">
+                        <div class="col-sm-4">
+                        <input class="form-control" name="account" id="userId" value="" type="text" placeholder="">
                     </div>
                 </div>
 
-                <div class="control-group">
+                <div class="form-group">
                     <!-- Text input-->
-                    <label class="control-label" for="userPwd">
+                    <label class="col-sm-1 control-label" for="userPwd">
                         登录密码
                     </label>
 
-                    <div class="controls">
-                        <input class="input-xlarge" name="password" id="password" value="" type="text" placeholder="">
+                    <div class="col-sm-4">
+                        <input class="form-control" name="password" id="password" value="" type="text" placeholder="">
                     </div>
                 </div>
-                <div class="control-group">
+                <div class="form-group">
                     <!-- Text input-->
-                    <label class="control-label" for="userName">
+                    <label class="col-sm-1 control-label" for="userName">
                         真实姓名
                     </label>
 
-                    <div class="controls">
-                        <input class="input-xlarge" name="name" id="userName" value="" type="text" placeholder="">
+                    <div class="col-sm-4">
+                        <input class="form-control" name="name" id="userName" value="" type="text" placeholder="">
                     </div>
                 </div>
 
-                <div class="control-group">
+                <div class="form-group">
                     <!-- Text input-->
-                    <label class="control-label" >
-                        角色
-                    </label>
-                    <div class="controls">
-                        <select class="span2"  name="roleId">
-                            <c:forEach var="role" items="${roles}">
-                                <option value="${role.id}">${role.name}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <!-- Text input-->
-                    <label class="control-label">
+                    <label class="col-sm-1 control-label">
 
                     </label>
 
-                    <div class="controls">
-                        <button type="reset" class="btn" onclick=""> 重置</button>
+                    <div class="col-sm-4">
+                        <button type="reset" class="btn btn-default" onclick=""> 重置</button>
                         <button type="button" class="btn btn-primary" onclick="saveNewUser()"> 提交</button>
                     </div>
                 </div>

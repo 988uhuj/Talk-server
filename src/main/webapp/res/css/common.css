@@ -5,3 +5,11 @@ body {
     padding: 40px 15px;
     text-align: center;
 }
+
+/* tab 关闭按钮样式 */
+/* http://jsfiddle.net/vinodlouis/pb6EM/1/ */
+.nav-tabs > li .close {
+    margin: -2px 0 0 10px;
+    font-size: 18px;
+
+}

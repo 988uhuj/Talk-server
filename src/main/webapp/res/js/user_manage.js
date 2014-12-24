@@ -35,3 +35,7 @@ $('#nav-tab a').click(function (e) {
         //queryUserList(1,20);
     }
 });
+
+function openNewTab(){
+    showTab("user-new-tab-li");
+}
