@@ -78,3 +78,160 @@ function hidediv(id) {
 }
 
 
+
+
+//=================表格相关===============================
+
+
+/**
+ * 从表单对象数据中将匹配到的表单数据赋值为空
+ * @param {} formData 表单对象数据
+ * @param {} matcherData 查找匹配的数据
+ */
+function removeFormDefaultVal(formData, matcherData){
+
+    $.each(matcherData, function(property, value){
+        if(value==formData[property]){
+            formData[property] = '';
+        }
+    });
+
+}
+
+function commonInitPagination(total,page,pageSize,param,url,columns,table,callback,divPage){
+    if(!divPage) return;
+
+
+    divPage.unbind();
+    divPage.bootpag( {
+        total : total,
+        page : page,
+        maxVisible : pageSize
+    }).on('page', function(event, num) {
+        internalQueryForListAndPageByParamMap(num,pageSize,param,url,columns,table,callback,divPage);
+    });
+}
+
+
+
+/**
+ * 生成表格的Thead元素
+ * @param {} dataList 表格展示的数据集合
+ * @param {} titleNames 标题数组对象，用于指定显示的顺序
+ */
+function commonGetThead(columns){
+    var thead = $('<thead>');
+    var tit = $('<tr>');
+    $.each(columns, function(index, column){
+        var th = $('<th>');
+        th.html(column['title']);
+        tit.append(th);
+    });
+    thead.append(tit);
+
+    return thead;
+}
+
+/**
+ * 生成表格的TBODY元素
+ * @param {} dataList 表格展示的数据集合
+ * @param {} titleNames 标题数组对象，用于指定显示的顺序
+ */
+function commonGetTbody(dataList, columns){
+    var tbody = $('<tbody>');
+    $.each(dataList, function(i, data){
+        var tr = $('<tr>');
+        $.each(columns, function(index, column){
+            var tdValue = "";
+            var td = $('<td>');
+
+            if(jQuery.isFunction(column['render'])){
+                column['render'](data, data[column['name']], td);
+            } else {
+                tdValue = data[column['name']];
+                if(column['name']=='specialty') {
+                    var div = $('<div style="display: inline-block;width:300px"></div>');
+                    div.html(tdValue);
+                    td.append(div);
+                }else
+                    td.html(tdValue);
+            }
+            tr.append(td);
+        });
+        tbody.append(tr);
+    });
+
+    return tbody;
+}
+
+
+function internalQueryForListAndPageByParamMap(page, pageSize,param,url,columns,table,callback,divPage){
+
+    g_cur_page = page;
+    g_cur_pagesize = pageSize;
+
+    var paramMap = JSON.stringify(param);
+
+
+
+    table.prepend(showAlert('spininfo','',"正在加载数据"));
+
+    var postdata = {'param':paramMap};
+    if(divPage!=null){
+        postdata = {'param':paramMap,'page':page,'pageSize':pageSize};
+
+    }
+
+
+    $.ajax({
+        dataType : 'json',
+        type : 'POST',
+        url : url,
+        data : postdata,
+        success : function(data) {
+            var body = data.body;
+            table.html('');
+
+            if(body!=null){
+
+
+                var tbody = commonGetTbody(body, columns);
+                var thead = commonGetThead(columns);
+
+                table.append(thead);
+                table.append(tbody);
+
+                if(divPage!=null){
+                    // 初始化分页
+                    commonInitPagination(data.Total, data.page,pageSize,param,url,columns,table,callback,divPage);
+                }
+            }
+            callback.success(data);
+
+        },
+        error : function() {
+
+            callback.error();
+        }
+    });
+}
+
+
+function commonQueryForListAndPage(page, pageSize,conditionForm,url,columns,table,callback,divPage){
+
+    var param = conditionForm.serializeFormStandard();
+
+    var matcherData = {
+        name:'部门名称',
+        tel:'电话号码'
+    };
+    removeFormDefaultVal(param, matcherData);
+    internalQueryForListAndPageByParamMap(page,pageSize,param,url,columns,table,callback,divPage);
+}
+
+
+function commonQueryForSimpleList(param,url,columns,table,callback){
+    internalQueryForListAndPageByParamMap(1,20,param,url,columns,table,callback,null);
+}
+
+
