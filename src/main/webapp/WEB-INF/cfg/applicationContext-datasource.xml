@@ -34,12 +34,12 @@
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <property name="typeAliasesPackage" value="me.risky.talk.comment.domain" />
+        <property name="typeAliasesPackage" value="me.risky.talk.comment.domain; me.risky.talk.server.domain" />
     </bean>
 
     <!-- myBatis映射文件配置扫描器 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="me.risky.talk.comment.persistence" />
+        <property name="basePackage" value="me.risky.talk.comment.persistence; me.risky.talk.server.persistence" />
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
     </bean>
 </beans>

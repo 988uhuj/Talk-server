@@ -24,7 +24,7 @@ public class CommentService {
 
     public void deleteComment(int id){
         // TODO 暂不完成
-}
+    }
 
     public List<TComment> queryCommentList(int type, String key){
         TCommentExample example = new TCommentExample();

@@ -7,18 +7,18 @@
   <context id="context1"  targetRuntime="MyBatis3">  
     <!-- jdbc连接信息 -->  
     <jdbcConnection driverClass="com.mysql.jdbc.Driver"    
-    connectionURL="jdbc:mysql://127.0.0.1:3306/talk"   
-    userId="talkroot" 
+    connectionURL="jdbc:mysql://127.0.0.1:3306/db_talk"
+    userId="root"
     password="abc123" />  
 
     <!-- 生成vo对象 -->  
-    <javaModelGenerator targetPackage="me.risky.talk.comment.domain" targetProject="main/java" />  
+    <javaModelGenerator targetPackage="me.risky.talk.server.domain" targetProject="main/java" />
 
     <!-- 生成用于查询的Example对象  mapper.xml-->  
-     <sqlMapGenerator targetPackage="me.risky.talk.comment.persistence" targetProject="main/resources" />  
+     <sqlMapGenerator targetPackage="me.risky.talk.server.persistence" targetProject="main/resources" />
 
     <!-- 生成DAO的类文件以及配置文件  mapper.java-->  
-     <javaClientGenerator targetPackage="me.risky.talk.comment.persistence" targetProject="main/java" type="XMLMAPPER" />   
+     <javaClientGenerator targetPackage="me.risky.talk.server.persistence" targetProject="main/java" type="XMLMAPPER" />
 
 
 
@@ -31,7 +31,10 @@
 	<table schema="" tableName="equipment" >  </table>
   <table schema="" tableName="location_check" >  </table>  -->
    
-  <table schema="" tableName="t_comment" >  </table>
- 
+  <!--<table schema="" tableName="t_comment" >  </table>-->
+  <table schema="" tableName="t_content" >  </table>
+  <table schema="" tableName="t_file" >  </table>
+  <table schema="" tableName="t_user" >  </table>
+
   </context>  
 </generatorConfiguration> 
