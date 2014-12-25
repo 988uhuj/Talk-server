@@ -50,7 +50,7 @@ function saveNewUser(){
 function postSaveNewUser(formId){
     var map={};
     map = $.xhelper.formSerializeToArray($("#"+formId))
-    map['action']="user/create";
+    map['action']="create";
     $.xhelper.request("./user/index.do",map,
 
         //onSuccess

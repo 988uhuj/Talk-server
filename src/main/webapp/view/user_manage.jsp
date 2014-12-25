@@ -8,8 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <jsp:include page="common/path.jsp"></jsp:include>
-    <jsp:include page="common/header.jsp"></jsp:include>
+    <jsp:include page="common/path.jsp"/>
+    <jsp:include page="common/header.jsp"/>
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -130,6 +130,6 @@
 <!-- 必须包含通用页面底部JSP -->
 <jsp:include page="common/bottom.jsp"/>
 <%--模块js--%>
-<script src="../res/js/user_manage.js"></script>
+<script src="./res/js/user_manage.js"></script>
 </body>
 </html>

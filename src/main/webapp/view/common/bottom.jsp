@@ -18,7 +18,7 @@
 <script src="./res/plugin/json/json2.js"></script>
 <script src="./res/plugin/json/form2json.js"></script>
 
-<%--<script src="./res/js/common/xhelper.js"></script>--%>
+<script src="./res/js/common/xhelper.js"></script>
 <script src="./res/js/common/common.js"></script>
 <script src="./res/plugin/datepicker/js/bootstrap-datepicker.js"></script>
 <script src="./res/plugin/datepicker/js/locales/bootstrap-datepicker.zh-CN.js"></script>

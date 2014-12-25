@@ -1,6 +1,5 @@
 package me.risky.talk.comment.web.controller;
 
-import me.risky.talk.server.domain.TContent;
 import me.risky.talk.server.persistence.STContentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,13 +40,13 @@ public class CommentController {
 
     @RequestMapping("test2")
     public void test2(){
-        System.out.println("test");
-
-        TContent tContent = new TContent();
-        tContent.setId(12322L);
-        stContentMapper.insert(tContent);
-
-        System.out.println("test2");
+//        System.out.println("test");
+//
+//        TContent tContent = new TContent();
+//        tContent.setId(12322L);
+//        stContentMapper.insert(tContent);
+//
+//        System.out.println("test2");
     }
 
 }

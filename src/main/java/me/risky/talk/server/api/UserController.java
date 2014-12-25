@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -31,7 +32,6 @@ public class UserController extends BaseController {
 
     @RequestMapping("index")
     public void equipment(String param, HttpServletRequest req, HttpServletResponse res) {
-        System.out.println("equipment");
         Map<String, Object> paramMap = JsonUtil.fromJsonToObject(param, Map.class);
         //String action=(req.getParameter("action") == null ? "404" : req.getParameter("action"));
 
@@ -44,7 +44,7 @@ public class UserController extends BaseController {
             setResponseObject(null);
             setResponseCode(404);
             setResponseMessage("ACTION IS NULL");
-        }  else if (action.equals("create/equipment")) {
+        }  else if (action.equals("create")) {
             createUser(paramMap, req, res);
         }
 
@@ -82,11 +82,13 @@ public class UserController extends BaseController {
             return;
         }
 
-        UUID uuid  =  UUID.randomUUID();
-        String id = UUID.randomUUID().toString();
+        user.setId(UUID.randomUUID().toString());
+        user.setCreateTime(new Date());
+        userMapper.insert(user);
 
-//        user.setId(uuid);
-
+        setResponseObject(null);
+        setResponseCode(200);
+        setResponseMessage("ADD USER OK");
     }
 
 }
