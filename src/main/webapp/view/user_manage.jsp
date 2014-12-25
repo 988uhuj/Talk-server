@@ -78,13 +78,12 @@
 
         <!-- 新建用户标签页 -->
         <div class="tab-pane" id="user-new-tab-pane">
-            <form class="form-horizontal" id="userNewForm">
+            <form class="form-horizontal" id="user-new-form">
                 <div class="form-group">
                     <!-- Text input-->
-                    <label class="col-sm-1 control-label">
+                    <label class="col-sm-1 control-label" for="userId">
                         账号
                     </label>
-
                         <div class="col-sm-4">
                         <input class="form-control" name="account" id="userId" value="" type="text" placeholder="">
                     </div>
@@ -92,7 +91,7 @@
 
                 <div class="form-group">
                     <!-- Text input-->
-                    <label class="col-sm-1 control-label" for="userPwd">
+                    <label class="col-sm-1 control-label" for="password">
                         登录密码
                     </label>
 
@@ -102,12 +101,11 @@
                 </div>
                 <div class="form-group">
                     <!-- Text input-->
-                    <label class="col-sm-1 control-label" for="userName">
+                    <label class="col-sm-1 control-label" for="name">
                         真实姓名
                     </label>
-
                     <div class="col-sm-4">
-                        <input class="form-control" name="name" id="userName" value="" type="text" placeholder="">
+                        <input class="form-control" name="name" id="name" value="" type="text" placeholder="">
                     </div>
                 </div>
 
@@ -130,7 +128,7 @@
 
 </div>
 <!-- 必须包含通用页面底部JSP -->
-<jsp:include page="common/bottom.jsp"></jsp:include>
+<jsp:include page="common/bottom.jsp"/>
 <%--模块js--%>
 <script src="../res/js/user_manage.js"></script>
 </body>

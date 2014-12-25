@@ -39,3 +39,32 @@ $('#nav-tab a').click(function (e) {
 function openNewTab(){
     showTab("user-new-tab-li");
 }
+
+
+//================================================
+
+function saveNewUser(){
+    postSaveNewUser("user-new-form")
+}
+
+function postSaveNewUser(formId){
+    var map={};
+    map = $.xhelper.formSerializeToArray($("#"+formId))
+    map['action']="user/create";
+    $.xhelper.request("./user/index.do",map,
+
+        //onSuccess
+        function(action,code,body,msg){
+            if(code == 200){
+                alert("提交成功");
+            } else if(code == 404){
+                alert("该账号已被注册");
+            }
+        },
+        //onLoad
+        function(){
+
+        },
+        //onLog
+        null);
+}

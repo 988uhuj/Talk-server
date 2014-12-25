@@ -4,12 +4,19 @@ import me.risky.talk.common.BaseController;
 import me.risky.talk.common.util.BaseUtil;
 import me.risky.talk.common.util.JsonUtil;
 import me.risky.talk.common.util.MapHelper;
+import me.risky.talk.server.domain.TUser;
+import me.risky.talk.server.domain.TUserExample;
+import me.risky.talk.server.persistence.STUserMapper;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author <a href="mailto:chenupt@gmail.com">jfchen</a>
@@ -19,7 +26,10 @@ import java.util.Map;
 @RequestMapping("user")
 public class UserController extends BaseController {
 
-    @RequestMapping("/index")
+    @Autowired
+    STUserMapper userMapper;
+
+    @RequestMapping("index")
     public void equipment(String param, HttpServletRequest req, HttpServletResponse res) {
         System.out.println("equipment");
         Map<String, Object> paramMap = JsonUtil.fromJsonToObject(param, Map.class);
@@ -30,17 +40,13 @@ public class UserController extends BaseController {
         if (action == null) {
             action = "404";
         }
-//        if (action.equals("404")) {
-//            setResponseObject(null);
-//            setResponseCode(404);
-//            setResponseMessage("ACTION IS NULL");
-//        }  else if (action.equals("create/equipment")) {
-//            createEquipment(paramMap, req, res);
-//        } else if (action.equals("query/equipment")) {
-//            queryEquipment(paramMap, req, res);
-//        } else if (action.equals("delete/equipment")) {
-//            deleteEquipment(paramMap, req, res);
-//        }
+        if (action.equals("404")) {
+            setResponseObject(null);
+            setResponseCode(404);
+            setResponseMessage("ACTION IS NULL");
+        }  else if (action.equals("create/equipment")) {
+            createUser(paramMap, req, res);
+        }
 
         int retCode = getResponseCode();
 
@@ -55,6 +61,32 @@ public class UserController extends BaseController {
         setResponseMessage(null);
         setResponseCode(200);
         setResponseObject(null);
+    }
+
+
+    public void createUser(Map paramMap, HttpServletRequest request, HttpServletResponse response){
+        paramMap.remove("action");
+        ObjectMapper mapper = new ObjectMapper();
+        TUser user = mapper.convertValue(paramMap, TUser.class);
+
+        TUserExample example = new TUserExample();
+        TUserExample.Criteria c = example.createCriteria();
+        c.andAccountEqualTo(user.getAccount());
+        c.andNameEqualTo(user.getName());
+
+        List<TUser> tUsers = userMapper.selectByExample(example);
+        if(tUsers.size() > 0){
+            setResponseObject(null);
+            setResponseCode(404);
+            setResponseMessage("ADD USER FAIL");
+            return;
+        }
+
+        UUID uuid  =  UUID.randomUUID();
+        String id = UUID.randomUUID().toString();
+
+//        user.setId(uuid);
+
     }
 
 }
