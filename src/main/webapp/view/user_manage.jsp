@@ -58,15 +58,13 @@
                 <form class="navbar-form navbar-left navbar-default" id="form-user-query" role="search">
                     <div class="form-group">
                         <input name="account" type="text" class="form-control" placeholder="账号">
-                        <input value="user/query/by/map" type="hidden" name="action"/>
+                        <input value="query/account" type="hidden" name="action"/>
                         <button type="button" class="btn btn-default" onclick="queryUserList(1, 20)"> 查询</button>
                         <button type="button" class="btn btn-primary" onclick="openNewTab()"> 新建</button>
                     </div>
                 </form>
             </nav>
             <div class="control-group">
-                <h1>22</h1>
-
                 <div class="controls">
                     <table id="user-table" class="table table-bordered table-striped table-hover"></table>
                 </div>

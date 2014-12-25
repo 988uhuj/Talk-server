@@ -234,4 +234,60 @@ function commonQueryForSimpleList(param,url,columns,table,callback){
     internalQueryForListAndPageByParamMap(1,20,param,url,columns,table,callback,null);
 }
 
+/**
+ * 将一个表单的数据返回成JSON对象
+ * 依赖jQuery类库
+ * @return {}
+ */
+$.fn.serializeFormStandard = function() {
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+        if (o[this.name]) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};
+
+function showAlert(type, title, info, target){
+    var alertClass = '';
+    var spin='';
+    switch(type){
+
+        case 'success' : alertClass = 'alert-success';
+            break;
+        case 'error' : alertClass = 'alert-error';
+            break;
+        case 'info' : alertClass = 'alert-info';
+            break;
+        case 'spininfo' : alertClass = 'alert-info spin';
+            spin='<span><img src="./res/image/loading.gif"/>  </span>';
+            break;
+        case 'warn' : alertClass = 'alert-block';
+            break;
+
+    }
+    var html  = '<div class="alert ' + alertClass + '">';
+    html +=	'	<button id="mymodel_alert_close" type="button" class="close" data-dismiss="alert">&times;</button>';
+    if(title){
+        html += '	<h4>' + title + '</h4>';
+    }
+    html += spin+info;
+    html += '</div>';
+
+    if(type=='success' || type=='error' || type=='info'){
+        window.setTimeout(function(){
+            $('#mymodel_alert_close').click();
+        }, 5000);
+    }
+
+    return html;
+
+}
 

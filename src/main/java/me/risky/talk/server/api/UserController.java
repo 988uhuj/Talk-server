@@ -44,8 +44,10 @@ public class UserController extends BaseController {
             setResponseObject(null);
             setResponseCode(404);
             setResponseMessage("ACTION IS NULL");
-        }  else if (action.equals("create")) {
+        } else if (action.equals("create")) {
             createUser(paramMap, req, res);
+        } else if (action.equals("query/account")){
+            queryUserByAccount(paramMap);
         }
 
         int retCode = getResponseCode();
@@ -64,7 +66,7 @@ public class UserController extends BaseController {
     }
 
 
-    public void createUser(Map paramMap, HttpServletRequest request, HttpServletResponse response){
+    public void createUser(Map paramMap, HttpServletRequest request, HttpServletResponse response) {
         paramMap.remove("action");
         ObjectMapper mapper = new ObjectMapper();
         TUser user = mapper.convertValue(paramMap, TUser.class);
@@ -75,7 +77,7 @@ public class UserController extends BaseController {
         c.andNameEqualTo(user.getName());
 
         List<TUser> tUsers = userMapper.selectByExample(example);
-        if(tUsers.size() > 0){
+        if (tUsers.size() > 0) {
             setResponseObject(null);
             setResponseCode(404);
             setResponseMessage("ADD USER FAIL");
@@ -89,6 +91,20 @@ public class UserController extends BaseController {
         setResponseObject(null);
         setResponseCode(200);
         setResponseMessage("ADD USER OK");
+    }
+
+    public void queryUserByAccount(Map paramMap) {
+        TUserExample example = new TUserExample();
+        TUserExample.Criteria c = example.createCriteria();
+        if(MapHelper.s(paramMap, "account") != null){
+            c.andAccountLike("%" + MapHelper.s(paramMap, "account") + "%");
+        }
+
+        List<TUser> tUsers = userMapper.selectByExample(example);
+
+        setResponseObject(tUsers);
+        setResponseCode(200);
+        setResponseMessage("OK");
     }
 
 }

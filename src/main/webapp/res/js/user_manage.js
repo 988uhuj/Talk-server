@@ -11,7 +11,7 @@
  */
 $(document).ready(function(){
     pushTabToStack('user-list-tab-li');
-    //queryUserList(1,20);
+    queryUserList(1,20);
 });
 
 /**
@@ -67,4 +67,64 @@ function postSaveNewUser(formId){
         },
         //onLog
         null);
+}
+
+
+/**
+ *
+ * @param page  分页序号
+ * @param pageSize  每页显示条数
+ */
+function queryUserList(page, pageSize){
+
+    /**
+     * 表格列定义
+     * @type {Array}
+     */
+    var columns = [
+        {
+            name:'account',
+            title:'账号'
+        },
+        {
+            name:'name',
+            title:'昵称'
+        },
+        {
+            name:'password',
+            title:'密码'
+        }];
+
+    /**
+     * ajax 请求回调函数
+     * @type {{success: Function, error: Function}}
+     */
+    var ajaxCallback={
+        success:function(data){
+        },
+        error:function(){
+        }
+    };
+
+    var div_table;
+    var div_page;
+    var form;
+
+    div_table=  $('#user-table');
+    div_page =  $('#user-page');
+    form=$('#form-user-query');
+
+    /**
+     * 通用查询结果生成列表函数
+     */
+    commonQueryForListAndPage(
+        page,
+        pageSize,
+        form,
+        './user/index.do',
+        columns,
+        div_table,
+        ajaxCallback,
+        div_page
+    );
 }
